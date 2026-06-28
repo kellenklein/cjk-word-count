@@ -1,0 +1,12 @@
+use std::io;
+
+fn main() -> io::Result<()>{
+    let mut buffer = String::new();
+    let stdin = io::stdin();
+    stdin.read_line(&mut buffer)?;
+    let characters = buffer.chars();
+    characters.for_each(move |x| {
+        println!("{}", x.to_digit(10).unwrap());
+    });
+    Ok(())
+}

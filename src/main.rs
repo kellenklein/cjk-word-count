@@ -1,0 +1,31 @@
+use std::io;
+
+fn is_cjk(character: u32) -> bool {
+    (0x4E00..=0x9FFF).contains(&character)
+         || (0x3400..=0x4DBF).contains(&character)
+         || (0x20000..=0x2A6DF).contains(&character)
+         || (0x2A700..=0x2B73F).contains(&character)
+         || (0x2B740..=0x2B81F).contains(&character)
+         || (0x2B820..=0x2CEAF).contains(&character)
+         || (0x2CEB0..=0x2EBEF).contains(&character)
+         || (0x30000..=0x3134F).contains(&character)
+         || (0x31350..=0x323AF).contains(&character)
+         || (0xF900..=0xFAFF).contains(&character)
+         || (0x2F800..=0x2FA1F).contains(&character)
+}
+
+fn main() -> io::Result<()> {
+    let stdin = io::stdin();
+    loop {
+        let mut buffer = String::new();
+        stdin.read_line(&mut buffer)?;
+        let characters = buffer.chars();
+        let mut counter = 0;
+        if buffer == "\n" { break; }
+        characters.for_each( |x| {
+            if is_cjk(x as u32) { counter = counter + 1; }
+        });
+        println!("Word Count: {}", counter);
+    }
+    Ok(())
+}
